@@ -456,7 +456,8 @@ uint CCubeMaterial::HandleReflection(const GXTexMapID indTexSlot, const int indM
                                      const uint kColorCount) {
   bool usesTevReg2 = false;
   for (uint i = 0; i < tevCount; ++i) {
-    if ((CGX::GetTevState(static_cast< GXTevStageID >(i)).mColorOps >> 9 & 3) == GX_TEVREG2) {
+    if (CGX::MaskAndShiftLeft(CGX::GetTevState(static_cast< GXTevStageID >(i)).mColorOps, 3, 9) ==
+        GX_TEVREG2) {
       usesTevReg2 = true;
       break;
     }
@@ -862,8 +863,9 @@ void CCubeMaterial::SetCurrent(const CModelFlags& flags, const CCubeSurface& sur
       texCount += 1;
       finalKColorCount += 1;
     } else if (finalTevCount != 0 &&
-               (CGX::GetTevState(static_cast< GXTevStageID >(finalTevCount - 1)).mColorOps >> 9 &
-                3) != 0) {
+               CGX::MaskAndShiftLeft(
+                   CGX::GetTevState(static_cast< GXTevStageID >(finalTevCount - 1)).mColorOps, 3,
+                   9) != 0) {
       DoPassthru(finalTevCount);
       finalTevCount += 1;
     }
