@@ -75,6 +75,28 @@ CColor CColor::Add(const CColor& a, const CColor& b) {
   return CColor(red, green, blue, alpha);
 }
 
+// Guessed name: target routine at 0x80320440 expands RGB5A3.
+CColor CColor::FromRGB5A3(ushort value) {
+  const ushort c = value;
+  if (c & 0x8000) {
+    const GXColor col = {static_cast< uchar >(((c & 0x7c00) >> 7) | ((c & 0x7000) >> 13)),
+                         static_cast< uchar >(((c & 0x3e0) >> 2) | ((c & 0x380) >> 7)),
+                         static_cast< uchar >(((c & 0x1f) << 3) | ((c & 0x1c) >> 2)), 0xff};
+    return CColor(col.r, col.g, col.b, col.a);
+  } else {
+    const GXColor col = {static_cast< uchar >(((c & 0xf00) >> 4) | ((c & 0xf00) >> 8)),
+                         static_cast< uchar >((c & 0xf0) | ((c & 0xf0) >> 4)),
+                         static_cast< uchar >(((c & 0xf) << 4) | (c & 0xf)),
+                         static_cast< uchar >(((c & 0x7000) >> 7) | ((c & 0x7000) >> 10))};
+    return CColor(col.r, col.g, col.b, col.a);
+  }
+}
+
+// Guessed name: target routine at 0x80320420 packs RGB565.
+ushort CColor::ToRGB565() const {
+  return ((mB & 0xf8) >> 3) | ((mG & 0xfc) << 3) | ((mR & 0xf8) << 8);
+}
+
 ushort CColor::ToRGB5A3() const {
   const uchar r = GetRedu8();
   const uchar g = GetGreenu8();
@@ -84,27 +106,4 @@ ushort CColor::ToRGB5A3() const {
   if (a != 0xff)
     ret = ((a & 0xe0) << 7) | ((b & 0xf0) >> 4) | (g & 0xf0) | ((r & 0xf0) << 4);
   return ret;
-}
-
-// Guessed name: target routine at 0x80320420 packs RGB565.
-ushort CColor::ToRGB565() const {
-  return ((mB & 0xf8) >> 3) | ((mG & 0xfc) << 3) | ((mR & 0xf8) << 8);
-}
-
-// Guessed name: target routine at 0x80320440 expands RGB5A3.
-CColor CColor::FromRGB5A3(ushort value) {
-  if (value & 0x8000) {
-    CColor color(0xffffffff);
-    color.mR = ((value & 0x7c00) >> 7) | ((value & 0x7000) >> 13);
-    color.mG = ((value >> 5) & 0x1f) << 3 | ((value >> 5) & 0x1f) >> 2;
-    color.mB = (value & 0x1f) << 3 | (value & 0x1f) >> 2;
-    return color;
-  } else {
-    CColor color(0);
-    color.mR = ((value >> 8) & 0xf) << 4 | ((value >> 8) & 0xf);
-    color.mG = ((value >> 4) & 0xf) << 4 | ((value >> 4) & 0xf);
-    color.mB = (value & 0xf) << 4 | (value & 0xf);
-    color.mA = ((value >> 12) & 7) << 5 | ((value >> 12) & 7) << 2;
-    return color;
-  }
 }

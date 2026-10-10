@@ -1140,7 +1140,7 @@ config.libs = [
             Object(MatchingFor("G2ME01"), "Kyoto/Animation/CAdditiveAnimPlayback.cpp"),
             Object(MatchingFor("G2ME01"), "Kyoto/Particles/CParticleElectricDataFactory.cpp"),
             Object(NonMatching, "Kyoto/Particles/CParticleElectric.cpp"),
-            Object(NonMatching, "Kyoto/Graphics/DolphinCColor.cpp"),
+            Object(MatchingFor("G2ME01"), "Kyoto/Graphics/DolphinCColor.cpp"),
             Object(NonMatching, "Kyoto/CDependencyGroup.cpp"),
             Object(MatchingFor("G2ME01"), "Kyoto/Audio/CStreamAudioManager.cpp"),
             Object(MatchingFor("G2ME01", "G2MP01"), "Kyoto/Animation/CHalfTransition.cpp"),
