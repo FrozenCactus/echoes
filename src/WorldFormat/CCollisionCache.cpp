@@ -306,13 +306,13 @@ CCollisionCacheIterator::CCollisionCacheIterator(CCollisionCache& cache) {
   }
 }
 
-bool CCollisionCacheIterator::MatchesGeometry(short id, const CCollisionPrimitiveData* geometry,
-                                              const CTransform4f& transform, u64 flags) const {
-  if (ushort(mObjectId) != ushort(id))
+bool CCollisionCacheIterator::MatchesGeometry(ushort id, const CCollisionPrimitiveData* geometry,
+                                              CTransform4f transform, u64 flags) {
+  if (mObjectId != id)
     return false;
-  if (mGeometry != geometry)
+  if (geometry != mGeometry)
     return false;
-  if (mMaterialFlags != flags)
+  if (flags != mMaterialFlags)
     return false;
   ConstMtxPtr current = transform.GetCStyleMatrix();
   for (int i = 0; i < 4; ++i) {
