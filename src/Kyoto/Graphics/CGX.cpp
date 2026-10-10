@@ -498,6 +498,17 @@ void CGX::SetVtxDescv_Compressed(uint flags) {
     list->type = static_cast< GXAttrType >(flags >> shift & 3);
     ++list;
   }
+  if ((flags & 0xff000000) != (gpGXState->mDescList & 0xff000000)) {
+    for (uint idx = 0; idx < 8; ++idx) {
+      uint shift = idx + 24;
+      if ((flags & 1 << shift) == (gpGXState->mDescList & 1 << shift)) {
+        continue;
+      }
+      list->attr = static_cast< GXAttr >(GX_VA_PNMTXIDX + idx);
+      list->type = static_cast< GXAttrType >(flags >> shift & 1);
+      ++list;
+    }
+  }
   list->attr = GX_VA_NULL;
   list->type = GX_NONE;
   GXSetVtxDescv(sVtxDescList);
