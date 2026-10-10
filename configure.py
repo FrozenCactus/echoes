@@ -1883,6 +1883,13 @@ config.libs = [
         extra_cflags=["-pool off"],
     ),
     Rel(
+        "EmperorIngStage1",
+        [
+            Object(NonMatching, "MetroidPrime/Enemies/CEmperorIngStage1.cpp"),
+        ],
+        extra_cflags=["-pool off"],
+    ),
+    Rel(
         "Splitter",
         [
             Object(NonMatching, "MetroidPrime/Enemies/CSplitterCommandModule.cpp"),

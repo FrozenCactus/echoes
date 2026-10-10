@@ -6,6 +6,13 @@ Sections:
 	.data       type:data align:8
 	.bss        type:bss align:8
 
+MetroidPrime/Enemies/CEmperorIngStage1.cpp:
+	.text       start:0x00000000 end:0x0000C2A4
+	.ctors      start:0x00000000 end:0x00000004
+	.rodata     start:0x00000000 end:0x00000AC0
+	.data       start:0x00000000 end:0x0000059C
+	.bss        start:0x00000000 end:0x00000020
+
 REL/REL_Setup.cpp:
 	.text       start:0x0000C2A4 end:0x0000C448
 	.rodata     start:0x00000AC0 end:0x00000B44
