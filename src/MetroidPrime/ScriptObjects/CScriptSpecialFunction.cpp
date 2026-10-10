@@ -2086,15 +2086,16 @@ void CScriptSpecialFunction::PreRenderAllViewports(CStateManager& mgr) {
       if (fog->GetFogMode() == kRFM_None) {
         return;
       }
-      mgr.SetAreaClipPlane(GetCurrentAreaId(),
-                           CPlane(fog->GetRange().GetY() +
-                                      CVector3f::Dot(camXf.GetForward(), camXf.GetTranslation()),
-                                  CUnitVector3f(camXf.GetForward(), CUnitVector3f::kN_No)));
+      const CVector3f forward = camXf.GetForward();
+      const CPlane plane(fog->GetRange().GetY() + CVector3f::Dot(forward, camXf.GetTranslation()),
+                         CUnitVector3f(forward.GetX(), forward.GetY(), forward.GetZ()));
+      mgr.SetAreaClipPlane(GetCurrentAreaId(), plane);
     } else {
       CPlane plane(GetTranslation(), CUnitVector3f(GetTransform().GetUp()));
       const CVector3f point = plane.GetNormal() * plane.GetConstant();
       if (CVector3f::Dot(camXf.GetTranslation() - point, plane.GetNormal()) > 0.f) {
-        plane = CPlane(point, -plane.GetNormal());
+        const CVector3f normal = -static_cast< const CVector3f& >(plane.GetNormal());
+        plane.SetFrom(CVector3f::Dot(point, normal), normal);
       }
       mgr.SetAreaClipPlane(GetCurrentAreaId(), plane);
     }

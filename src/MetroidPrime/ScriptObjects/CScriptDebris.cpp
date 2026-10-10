@@ -532,7 +532,7 @@ void CScriptDebris::AcceptScriptMsg(CStateManager& mgr, const CScriptMsg& msg) {
 void CScriptDebris::PreRenderAllViewports(CStateManager& mgr) {
   CActor::PreRenderAllViewports(mgr);
 
-  const float time = mDuration < mCurTime ? mDuration : mCurTime;
+  const float time = rstl::min_val(mCurTime, mDuration);
   const float relativeTime = time / mDuration;
   float fade = 0.f;
   if (relativeTime < mColorInT) {
@@ -540,7 +540,7 @@ void CScriptDebris::PreRenderAllViewports(CStateManager& mgr) {
       fade = 1.f - time / (mDuration * mColorInT);
     }
   } else if (relativeTime > mColorOutT) {
-    const bool flicker = mFlickerOnFadeOut && mUpdateFrameIndex % 6 > 2;
+    const bool flicker = mFlickerOnFadeOut ? mUpdateFrameIndex % 6 > 2 : false;
     if (flicker) {
       fade = 1.f;
     } else {

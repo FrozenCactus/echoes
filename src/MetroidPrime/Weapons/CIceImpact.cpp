@@ -146,13 +146,15 @@ void CIceImpact::PreRenderAllViewports(CStateManager& mgr) {
   const rstl::optional_object< CAABox > bounds = mElementGen->GetBounds();
   if (bounds) {
     mHasRenderBounds = true;
+    SetOtherBounds(*bounds);
     SetRenderBounds(*bounds);
   } else {
     const CVector3f pos = GetTranslation();
     mHasRenderBounds = false;
-    SetRenderBounds(CAABox(pos, pos));
+    const CAABox box(pos, pos);
+    SetOtherBounds(box);
+    SetRenderBounds(box);
   }
-  // TODO: propagate the calculated box to the actor's other-bounds cache.
   UpdatePortalSystemState(mgr);
 }
 
