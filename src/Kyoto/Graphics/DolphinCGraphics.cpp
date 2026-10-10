@@ -888,7 +888,7 @@ void CGraphics::EndScene() {
   CGX::SetZMode(true, GX_LEQUAL, false);
   CGX::SetVtxDescv(skPosColorTexDirect);
   CGX::Begin(GX_TRIANGLES, GX_VTXFMT0, 288);
-  for (int i = 0; i < 96; ++i) {
+  for (int i = 96; i != 0; --i) {
     GXPosition3f32(0.f, 1.f, 1.f);
     GXColor1u32(0);
     GXTexCoord2f32(0.f, 0.f);
@@ -902,6 +902,7 @@ void CGraphics::EndScene() {
   CGX::End();
   CGX::SetZMode(true, GX_LEQUAL, true);
 
+  void*& frameBuf = mpCurrenFrameBuf;
   const float brightness = CMath::Clamp(0.f, mBrightness, 2.f);
   static const u8 unfiltered[7] = {0, 0, 21, 22, 21, 0, 0};
   const u8* filter = mUseVideoFilter ? mRenderModeObj.vfilter : unfiltered;
@@ -910,9 +911,9 @@ void CGraphics::EndScene() {
     adjustedFilter[i] = static_cast< u8 >(brightness * filter[i]);
   }
   GXSetCopyFilter(mRenderModeObj.aa, mRenderModeObj.sample_pattern, GX_TRUE, adjustedFilter);
-  GXCopyDisp(mpCurrenFrameBuf, mIsBeginSceneClearFb);
-  GXSetCopyFilter(mRenderModeObj.aa, mRenderModeObj.sample_pattern, mUseVideoFilter,
-                  mRenderModeObj.vfilter);
+  GXCopyDisp(frameBuf, mIsBeginSceneClearFb ? GX_TRUE : GX_FALSE);
+  GXSetCopyFilter(mRenderModeObj.aa, mRenderModeObj.sample_pattern,
+                  mUseVideoFilter ? GX_ENABLE : GX_DISABLE, mRenderModeObj.vfilter);
   GXSetBreakPtCallback(SwapBuffers);
   VISetPreRetraceCallback(VideoPreCallback);
   VISetPostRetraceCallback(VideoPostCallback);
