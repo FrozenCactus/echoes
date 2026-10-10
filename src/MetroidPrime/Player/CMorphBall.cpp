@@ -2223,8 +2223,8 @@ static EMaterialTypes DeathBallExcludeMaterial2 = kMT_PowerBomb;          // Gue
 void CMorphBall::UpdateDeathBall(float dt, CStateManager& mgr) {
   rstl::vector< rstl::pair< TUniqueId, float > >::iterator it = mDeathBallDamageCooldowns.begin();
   while (it != mDeathBallDamageCooldowns.end()) {
-    it->second -= dt;
-    if (it->second <= 0.f) {
+    (*it).second -= dt;
+    if ((*it).second <= 0.f) {
       it = mDeathBallDamageCooldowns.erase(it);
     } else {
       ++it;

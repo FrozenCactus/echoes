@@ -4676,7 +4676,7 @@ void CPlayer::EmitMultiplayerBeamParticles(CStateManager& mgr) {
 }
 
 void CPlayer::RenderMultiplayerBeamParticles(const CStateManager& mgr) const {
-  if (mgr.IsMultiplayer() && mgr.GetCurrentRenderPlayerIndex() != GetPlayerIndex()) {
+  if (mgr.IsMultiplayer() && uint(mgr.GetCurrentRenderPlayerIndex()) != GetPlayerIndex()) {
     if (mBeamParticles.get()) {
       mBeamParticles->Render();
     }
