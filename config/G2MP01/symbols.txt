@@ -866,7 +866,7 @@ free_node_and_sub_nodes__Q24rstl130red_black_tree<10SObjectTag,10SObjectTag,0,Q2
 insert_into__Q24rstl130red_black_tree<10SObjectTag,10SObjectTag,0,Q24rstl22identity<10SObjectTag>,Q24rstl18less<10SObjectTag>,Q24rstl17rmemory_allocator>FPQ34rstl130red_black_tree<10SObjectTag,10SObjectTag,0,Q24rstl22identity<10SObjectTag>,Q24rstl18less<10SObjectTag>,Q24rstl17rmemory_allocator>4nodeRC10SObjectTag = .text:0x8002EE54; // type:function size:0x208
 create_node__Q24rstl130red_black_tree<10SObjectTag,10SObjectTag,0,Q24rstl22identity<10SObjectTag>,Q24rstl18less<10SObjectTag>,Q24rstl17rmemory_allocator>FPQ34rstl130red_black_tree<10SObjectTag,10SObjectTag,0,Q24rstl22identity<10SObjectTag>,Q24rstl18less<10SObjectTag>,Q24rstl17rmemory_allocator>4nodePQ34rstl130red_black_tree<10SObjectTag,10SObjectTag,0,Q24rstl22identity<10SObjectTag>,Q24rstl18less<10SObjectTag>,Q24rstl17rmemory_allocator>4nodePQ34rstl130red_black_tree<10SObjectTag,10SObjectTag,0,Q24rstl22identity<10SObjectTag>,Q24rstl18less<10SObjectTag>,Q24rstl17rmemory_allocator>4nodeQ24rstl10node_colorRC10SObjectTag = .text:0x8002F05C; // type:function size:0x68
 reserve__Q24rstl47vector<10SObjectTag,Q24rstl17rmemory_allocator>Fi = .text:0x8002F0C4; // type:function size:0xAC
-fn_8002F170 = .text:0x8002F170; // type:function size:0x64
+ReleaseData__Q24rstl23rc_ptr<13CAnimTreeNode>Fv = .text:0x8002F170; // type:function size:0x64 scope:weak
 ReleaseData__Q24rstl18rc_ptr<9IMetaAnim>Fv = .text:0x8002F1D4; // type:function size:0x64 align:4
 ReleaseData__Q24rstl27rc_ptr<17CAnimationManager>Fv = .text:0x8002F238; // type:function size:0x50
 __dt__17CAnimationManagerFv = .text:0x8002F288; // type:function size:0x90 scope:weak
@@ -18445,7 +18445,7 @@ __vt__14CAnimTreeBlend = .data:0x803BA9A8; // type:object size:0x88
 __vt__20CAnimTreeDoubleChild = .data:0x803BAA30; // type:object size:0x80
 __vt__13CAnimTreeNode = .data:0x803BAAB0; // type:object size:0x78
 __vt__20CAnimTreeSingleChild = .data:0x803BAB28; // type:object size:0x78
-lbl_803BABA0 = .data:0x803BABA0; // type:object size:0x78
+__vt__18CAnimTreeTimeScale = .data:0x803BABA0; // type:object size:0x78
 __vt__19CAnimTreeTransition = .data:0x803BAC18; // type:object size:0x88
 __vt__18CAnimTreeTweenBase = .data:0x803BACA0; // type:object size:0x88
 __vt__43TObjOwnerDerivedFromIObj<15CCharLayoutInfo> = .data:0x803BAD28; // type:object size:0x10

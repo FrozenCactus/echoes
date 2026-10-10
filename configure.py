@@ -992,6 +992,7 @@ config.libs = [
             Object(NonMatching, "Kyoto/Animation/CAnimSourceReaderBase.cpp"),
             Object(NonMatching, "Kyoto/Animation/CAnimTreeAnimReaderContainer.cpp"),
             Object(NonMatching, "Kyoto/Animation/CAnimTreeBlend.cpp"),
+            Object(Matching, "Kyoto/Animation/CAnimTreeContinuousPhaseBlend.cpp"),
             Object(NonMatching, "Kyoto/Animation/CAnimTreeDoubleChild.cpp"),
             Object(NonMatching, "Kyoto/Animation/CAnimTreeNode.cpp"),
             Object(NonMatching, "Kyoto/Animation/CAnimTreeSingleChild.cpp"),

@@ -25,8 +25,9 @@ public:
   , mInitialTime(node->GetSteadyStateAnimInfo().GetDuration() - node->GetTimeRemaining()) {}
 
   // IAnimReader
-  ~CAnimTreeTimeScale() override {}
+  // VAdvanceView is declared first so it, not the destructor, is the key function.
   SAdvancementResults VAdvanceView(const CCharAnimTime& time) override;
+  ~CAnimTreeTimeScale() override;
   CCharAnimTime VGetTimeRemaining() const override;
   CSteadyStateAnimInfo VGetSteadyStateAnimInfo() const override;
   uint VGetBoolPOIList(const CCharAnimTime& time, CBoolPOINode* listOut, uint capacity,
