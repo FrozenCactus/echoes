@@ -635,7 +635,7 @@ CGameState::SPreviousGameResults::SPreviousGameResults(
 , mPlayers(players) {}
 
 void CMFGame::RecordMultiplayerResults() const {
-  const bool showResults = gpGameState->PreviousGameResults().mShowResults;
+  bool showResults = gpGameState->PreviousGameResults().mShowResults;
   CGameMode& mode = gpGameState->GetGameMode();
   const int gameMode = mode.GetGameModeType();
   const int result = mode.GetResultIndex();
