@@ -103,9 +103,9 @@ void CGMMultiplayer::NotifyListeners(CStateManager& mgr, uint sourceIndex, uint 
 
 TUniqueId CGMMultiplayer::ChooseSpawnPoint(CStateManager& mgr, uint playerIndex,
                                            TUniqueId requested) {
+  CObjectList& objects = mgr.ObjectListById(kOL_All);
   rstl::vector< TUniqueId > candidates;
   candidates.reserve(16);
-  CObjectList& objects = mgr.ObjectListById(kOL_All);
   for (int index = objects.GetFirstObjectIndex(); index != -1;
        index = objects.GetNextObjectIndex(index)) {
     const CScriptSpawnPoint* spawn = TCastToPtr< CScriptSpawnPoint >(objects[index]);
@@ -115,7 +115,7 @@ TUniqueId CGMMultiplayer::ChooseSpawnPoint(CStateManager& mgr, uint playerIndex,
 
     const CVector3f position = spawn->GetTransform().GetTranslation();
     float nearestDistance = 1000000.f;
-    for (uint player = 0; player < GetNumPlayers(); ++player) {
+    for (int player = 0; player < GetNumPlayers(); ++player) {
       if (player != playerIndex) {
         const float distance = (mgr.GetPlayer(player)->GetTranslation() - position).Magnitude();
         if (distance < nearestDistance) {
@@ -123,8 +123,11 @@ TUniqueId CGMMultiplayer::ChooseSpawnPoint(CStateManager& mgr, uint playerIndex,
         }
       }
     }
-    if (nearestDistance >= 7.f && spawn->GetActive() && spawn->IsFirstSpawn()) {
-      candidates.push_back(spawn->GetUniqueId());
+    if (!(nearestDistance < 7.f) && spawn->GetActive() && spawn->IsFirstSpawn()) {
+      if (candidates.capacity() == candidates.size()) {
+        candidates.reserve(candidates.capacity() * 2);
+      }
+      candidates.push_back_unsafe(spawn->GetUniqueId());
     }
   }
 

@@ -21,13 +21,14 @@ void CGMCoin::Update(float dt, CStateManager& mgr) {
     EndGame(GetResultIndex(), mgr);
   }
 
-  for (uint i = 0; i < uint(mPlayerCount); ++i) {
-    CPlayerState& state = *mgr.PlayerState(i);
+  for (int i = 0; i < uint(mPlayerCount); ++i) {
+    CPlayer* plr = mgr.Player(i);
     SPlayerState& player = mPlayers[i];
+    CPlayerState& state = *mgr.PlayerState(i);
     state.ReInitializePowerUp(CPlayerState::kIT_CoinCounter, 0x8000);
     if (player.mDead) {
       player.mRespawnTimer -= dt;
-      if (player.mRespawnTimer < 0.f && player.mCanRespawn && mgr.GetPlayer(i)->fn_80019e20(mgr)) {
+      if (player.mRespawnTimer < 0.f && player.mCanRespawn && plr->fn_80019e20(mgr)) {
         RespawnPlayer(mgr, i);
         player.mDead = false;
       }
@@ -66,8 +67,9 @@ bool CGMCoin::IsGameOver() { return x38_ || CGMMultiplayer::IsGameOver(); }
 void CGMCoin::EndGame(int resultIndex, CStateManager& mgr) {
   CGMMultiplayer::EndGame(resultIndex, mgr);
   for (int i = 0; i < mPlayerCount; ++i) {
+    const CPlayerState& state = *mgr.GetPlayerState(uint(i));
     mPlayers[i].mScore = GetItemAmount(mgr, i);
-    mPlayers[i].mPlayerSelection = mgr.GetPlayerState(i)->GetPlayerSelection();
+    mPlayers[i].mPlayerSelection = state.GetPlayerSelection();
   }
 }
 
